@@ -17,6 +17,6 @@ WORKDIR /app
 COPY --from=requirements-builder /build/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
-
+COPY employment_exchange employment_exchange
+# COPY . .
 # CMD ["uvicorn", "main:app", "--reload"]

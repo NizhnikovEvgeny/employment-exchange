@@ -13,6 +13,8 @@ passlib = "*"
 pydantic = {extras = ["email"], version = "*"}
 bcrypt = "*"
 python-jose = "*"
+aiopg = "*"
+alembic = "*"
 
 [dev-packages]
 autopep8 = "*"
