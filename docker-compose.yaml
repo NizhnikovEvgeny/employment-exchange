@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    volumes:
+      - .:/usr/src/employment-exchange
+    ports:
+      - 8001:8000
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=employment_exchange
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_PORT=5432
+    restart: always
+
+  db:
+    image: postgres:11
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=employment_exchange
+    ports:
+      - 32700:5432
+
+volumes:
+  postgres_data:
