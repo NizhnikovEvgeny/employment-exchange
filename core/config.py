@@ -4,7 +4,7 @@ import os
 DATABASE_URL = "postgresql://postgres:postgres@localhost:32700/employment_exchange"
 
 config = Config(".env_dev")
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+ACCESS_TOKEN_EXPIRE_MINUTES = 600000
 ENCODE_ALGORITHM = "HS256"
 SECRET_KEY = config("EE_SECRET_KEY", cast=str, default="")
 # DATABASE_URL = config("EE_DATABASE_URL", cast=str, default="")
