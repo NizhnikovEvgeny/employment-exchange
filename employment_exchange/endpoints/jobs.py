@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from typing import List
+from typing import List, Optional
 
 from employment_exchange.models.job import JobNew, Job, JobBase
 from employment_exchange.models.user import User
@@ -35,7 +35,11 @@ async def get_all_jobs(
 async def get_job_by_id(
         job_id: int,
         job_repository: JobRepository = Depends(get_jobs_repository)):
-    return await job_repository.get_job_by_id(job_id=job_id)
+    job = await job_repository.get_job_by_id(job_id=job_id)
+    if job is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Job does not exist")
+    return job
 
 
 @router.patch("/{job_id}", response_model=Job)

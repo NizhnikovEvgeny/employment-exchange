@@ -18,5 +18,5 @@ responds = Table(
     Column("user_id", Integer, ForeignKey('users.id'),
            primary_key=True, nullable=False),
     Column("created_at", DateTime, default=datetime.datetime.utcnow()),
-    UniqueConstraint('job_id', 'user_id', name='unique respond')
+    UniqueConstraint('job_id', 'user_id', name='unique_user_job_respond')
 )

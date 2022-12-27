@@ -20,5 +20,5 @@ jobs = Table(
     Column("salary_to", Integer),
     Column("is_active", Boolean, default=False),
     Column("created_at", DateTime, default=datetime.datetime.utcnow()),
-    Column("updated_at", DateTime, default=datetime.datetime.utcnow()),
+    Column("updated_at", DateTime, default=datetime.datetime.utcnow())
 )

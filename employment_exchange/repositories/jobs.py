@@ -43,6 +43,8 @@ class JobRepository(BaseRepository):
         query = jobs.select().order_by(jobs.c.id)
         return await self.database.fetch_all(query)
 
-    async def get_job_by_id(self, job_id: int) -> Job:
+    async def get_job_by_id(self, job_id: int) -> Optional[Job]:
         query = jobs.select().where(jobs.c.id == job_id)
-        return await self.database.fetch_one(query)
+        # job = await self.database.fetch_one(query)
+        # raise KeyError(f"{job}")
+        return await self.database.fetch_one(query=query)

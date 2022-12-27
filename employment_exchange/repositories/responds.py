@@ -1,4 +1,8 @@
 import datetime
+from psycopg2.errors import UniqueViolation
+from sqlalchemy.exc import IntegrityError
+from fastapi import HTTPException, status
+from sqlalchemy.dialects.postgresql import insert
 
 from employment_exchange.db.responds import responds
 from .base import BaseRepository
@@ -15,6 +19,6 @@ class RespondsRepository(BaseRepository):
             created_at=datetime.datetime.utcnow()
         )
         values = new_respond.dict(exclude_none=True)
-        query = responds.insert().values(**values)
+        query = insert(responds).values(**values).on_conflict_do_nothing()
         new_respond.id = await self.database.execute(query)
         return Respond.parse_obj(new_respond)

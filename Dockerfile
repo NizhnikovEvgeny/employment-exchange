@@ -18,5 +18,6 @@ COPY --from=requirements-builder /build/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY employment_exchange employment_exchange
+COPY migrations migrations
 # COPY . .
 # CMD ["uvicorn", "main:app", "--reload"]

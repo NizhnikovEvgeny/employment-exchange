@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Response
 
+from databases import Database
+
 from employment_exchange.repositories.jobs import JobRepository
 from employment_exchange.repositories.responds import RespondsRepository
 from employment_exchange.models.user import User
@@ -17,11 +19,12 @@ async def respond_on_job(
         responds_repository: RespondsRepository = Depends(
             get_responds_reposotory),
         current_user: User = Depends(get_current_user)):
-    new_respond = await responds_repository.respond(user_id=current_user.id, job_id=job_id)
-    if new_respond is None:
-        return HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Couldn't save to DB")
-    else:
+    if await job_repository.get_job_by_id(job_id=job_id) is not None:
+        await responds_repository.respond(user_id=current_user.id, job_id=job_id)
         return Response(status_code=status.HTTP_201_CREATED)
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Job doesn't exist")
 
 
 @router.get("/jobs/{job_id}/responders")
