@@ -45,6 +45,4 @@ class JobRepository(BaseRepository):
 
     async def get_job_by_id(self, job_id: int) -> Optional[Job]:
         query = jobs.select().where(jobs.c.id == job_id)
-        # job = await self.database.fetch_one(query)
-        # raise KeyError(f"{job}")
         return await self.database.fetch_one(query=query)

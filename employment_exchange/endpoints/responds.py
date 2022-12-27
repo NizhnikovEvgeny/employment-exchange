@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Response
-
-from databases import Database
+from typing import List
 
 from employment_exchange.repositories.jobs import JobRepository
 from employment_exchange.repositories.responds import RespondsRepository
 from employment_exchange.models.user import User
-from employment_exchange.models.respond import Respond
-from employment_exchange.models.job import Job
-from .depends import get_current_user, get_jobs_repository, get_responds_reposotory
+
+
+from .depends import get_current_user, get_jobs_repository, get_responds_reposotory, get_job_responders
+from employment_exchange.services.get_job_responders import GetJobResponders
 
 router = APIRouter()
 
@@ -29,9 +29,8 @@ async def respond_on_job(
 
 @router.get("/jobs/{job_id}/responders")
 async def get_job_responders(
-    limit: int = 10,
-    offset: int = 0,
-    responds_repository: RespondsRepository = Depends(get_responds_reposotory),
-
-):
-    pass
+        job_id: int,
+        limit: int = 10,
+        offset: int = 0,
+        get_job_responders: GetJobResponders = Depends(get_job_responders)):
+    return await get_job_responders(job_id=job_id, limit=limit, offset=offset)

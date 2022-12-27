@@ -6,18 +6,23 @@ from employment_exchange.repositories.responds import RespondsRepository
 from employment_exchange.db.base import database
 from employment_exchange.models.user import User
 from employment_exchange.core.security import JWTBearer, decode_access_token
+from employment_exchange.services.get_job_responders import GetJobResponders
 
 
-def get_user_repository() -> UserRepository:
+async def get_user_repository() -> UserRepository:
     return UserRepository(database)
 
 
-def get_jobs_repository() -> JobRepository:
+async def get_jobs_repository() -> JobRepository:
     return JobRepository(database)
 
 
-def get_responds_reposotory() -> RespondsRepository:
+async def get_responds_reposotory() -> RespondsRepository:
     return RespondsRepository(database)
+
+
+async def get_job_responders(respond_repository: RespondsRepository = Depends(get_responds_reposotory), users_repository: UserRepository = Depends(get_user_repository)) -> GetJobResponders:
+    return GetJobResponders(respond_repository=respond_repository, users_repository=users_repository)
 
 
 async def get_current_user(
