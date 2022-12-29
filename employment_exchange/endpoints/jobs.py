@@ -1,10 +1,10 @@
 from fastapi import APIRouter, HTTPException, status
 from typing import List, Optional
 
-from employment_exchange.models.job import JobNew, Job, JobBase
-from employment_exchange.models.user import User
-from employment_exchange.repositories.jobs import JobRepository
-from employment_exchange.repositories.users import UserRepository
+from models.job import JobNew, Job, JobBase
+from models.user import User
+from repositories.jobs import JobRepository
+from repositories.users import UserRepository
 from .depends import Depends, get_jobs_repository, get_current_user, get_user_repository
 
 router = APIRouter()

@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Response
 from typing import List
 
-from employment_exchange.repositories.jobs import JobRepository
-from employment_exchange.repositories.responds import RespondsRepository
-from employment_exchange.models.user import User
+from repositories.jobs import JobRepository
+from repositories.responds import RespondsRepository
+from models.user import User
 
 
 from .depends import get_current_user, get_jobs_repository, get_responds_reposotory, get_job_responders
-from employment_exchange.services.get_job_responders import GetJobResponders
+from services.get_job_responders import GetJobResponders
 
 router = APIRouter()
 

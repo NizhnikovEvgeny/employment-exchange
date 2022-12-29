@@ -4,31 +4,33 @@ from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import and_
 
-from .base import BaseRepository
-from employment_exchange.models.user import User, UserIn
-from employment_exchange.db.users import users
-from employment_exchange.core.security import hash_password
+from models.user import User, UserIn, UserBase
+from repositories.base import BaseRepository
+from db.users import users
+from core.security import hash_password
 
 
 class UserRepository(BaseRepository):
 
-    async def get_all(self, limit: int = 10, offset: int = 0) -> List[User]:
+    async def get_all(self, limit: int = 10, offset: int = 0) -> List[UserBase]:
         query = users.select().limit(limit).offset(offset)
         return await self.database.fetch_all(query=query)
 
-    async def get_by_id(self, id: int) -> Optional[User]:
+    async def get_by_id(self, id: int) -> UserBase:
         query = users.select().where(users.c.id == id)
         user = await self.database.fetch_one(query=query)
-        if user is None:
-            return None
-        return User.parse_obj(user)
+        return UserBase.parse_obj(user)
 
-    async def get_by_email(self, email: str) -> Optional[User]:
+    async def get_by_ids(self, ids: list[int]) -> List[UserBase]:
+        query = users.select().where(users.c.id.in_(ids))
+        return await self.database.fetch_all(query=query)
+
+    async def get_by_email(self, email: str) -> Optional[UserBase]:
         query = users.select().where(users.c.email == email)
         user = await self.database.fetch_one(query=query)
         if user is None:
             return None
-        return User.parse_obj(user)
+        return UserBase.parse_obj(user)
 
     # Not used
     async def get_by_email_and_hashed_password(self, email: str, hashed_password: str) -> Optional[User]:

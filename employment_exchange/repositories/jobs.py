@@ -4,9 +4,9 @@ import datetime
 from datetime import timezone
 
 from aiopg.sa import SAConnection
-from .base import BaseRepository
-from employment_exchange.db.jobs import jobs
-from employment_exchange.models.job import Job, JobNew, JobBase
+from repositories.base import BaseRepository
+from db.jobs import jobs
+from models.job import Job, JobNew, JobBase
 from typing import Optional, List
 
 

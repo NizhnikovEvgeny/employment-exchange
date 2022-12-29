@@ -1,9 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from employment_exchange.repositories.users import UserRepository
+from repositories.users import UserRepository
 from .depends import get_user_repository, get_current_user
 from typing import List
 
-from employment_exchange.models.user import UserIn, User
+from models.user import UserIn, User
+
+import uvicorn
 
 router = APIRouter()
 
@@ -16,11 +18,13 @@ async def read_users(
     return await users.get_all(limit=limit, offset=offset)
 
 
-@router.get("/by_id", response_model=User)
+@router.get("/by_ids", response_model=List[User])
 async def get_user_by_id(
-        id: int,
+        ids: str,
         users: UserRepository = Depends(get_user_repository)):
-    return await users.get_by_id(id=id)
+    ids = ids.split(",")
+    ids = [int(id) for id in ids]
+    return await users.get_by_ids(ids=ids)
 
 
 @router.get("/by_email", response_model=User)

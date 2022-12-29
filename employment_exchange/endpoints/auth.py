@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from employment_exchange.repositories.users import UserRepository
+from repositories.users import UserRepository
 from .depends import get_user_repository
-from employment_exchange.core.security import hash_password, create_access_token, verify_password
-from employment_exchange.models.token import Login, Token
+from core.security import hash_password, create_access_token, verify_password
+from models.token import Login, Token
 from typing import Optional
 
 router = APIRouter()
