@@ -9,12 +9,15 @@ services:
       - 8001:8000
     depends_on:
       - db
+      - redis
     environment:
       - DB_HOST=db
       - DB_NAME=employment_exchange
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     restart: always
 
   db:
@@ -27,6 +30,14 @@ services:
       - POSTGRES_DB=employment_exchange
     ports:
       - 32700:5432
+
+  redis:
+    image: redis
+    command: ["redis-server"]
+    volumes:
+      - $PWD/data:/data
+    ports:
+      - "6379:6379"
 
 volumes:
   postgres_data:

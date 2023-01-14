@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-import uvicorn
 from db.base import database
 from endpoints import users, auth, jobs, responds, jobs_page
-from core.config import DATABASE_URL
+from core.config import DATABASE_URL, REDIS_URL
+from core.redis import initialize_redis
 
 app = FastAPI(title="Employment exchange")
 app.include_router(users.router, prefix="/users", tags=["users"])

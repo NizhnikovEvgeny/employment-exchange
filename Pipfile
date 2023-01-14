@@ -15,6 +15,7 @@ bcrypt = "*"
 python-jose = "*"
 aiopg = "*"
 alembic = "*"
+redis = "*"
 
 [dev-packages]
 autopep8 = "*"

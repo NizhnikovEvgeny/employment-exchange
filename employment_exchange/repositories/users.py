@@ -43,7 +43,7 @@ class UserRepository(BaseRepository):
 
     async def create(self, user: UserIn) -> User:
         now = datetime.utcnow()
-        user = User(
+        user = UserBase(
             name=user.name,
             email=user.email,
             hashed_password=hash_password(user.password),
